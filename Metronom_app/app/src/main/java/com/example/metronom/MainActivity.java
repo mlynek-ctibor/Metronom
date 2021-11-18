@@ -5,27 +5,88 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.media.MediaPlayer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
+    private Handler mHandler = new Handler();
+    int pockat;
+    EditText rychlost;
+    MediaPlayer player;
+    TextView textView7;
+    TextView textView8;
+    TextView textView4;
+    TextView textView5;
+
+    Switch aSwitch;
+    Switch aSwitch2;
+   // EditText editTextName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        rychlost = findViewById(R.id.editTextNumber);
+
+        textView7 = findViewById(R.id.textView7);
+        textView8 = findViewById(R.id.textView8);
+        textView5 = findViewById(R.id.textView5);
+        textView4 = findViewById(R.id.textView4);
+        //editTextName=findViewById(R.id.editTextNumber4);
+        aSwitch = findViewById(R.id.switch2);
+        aSwitch2 = findViewById(R.id.switch4);
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(aSwitch.isChecked())
+                {
+                   textView7.setText("O kolik zrychlit:");
+                   textView8.setText("Jak dlouho hrát:");
+                }
+                else {
+                    textView7.setText("");
+                    textView8.setText("");
+                }
+            }
+        });
+
+
+        aSwitch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(aSwitch2.isChecked())
+                {
+                    textView4.setText("Kolik zahrát:");
+                    textView5.setText("Kolik vynechat:");
+                }
+                else {
+                    textView4.setText("");
+                    textView5.setText("");
+                }
+            }
+        });
+
+
+
+
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
@@ -55,14 +116,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    public void Zvuk(View view)
-    {
-        Intent ht3= new Intent(MainActivity.this, Zvuk.class);
+
+    public void Zvuk(View view) {
+        Intent ht3 = new Intent(MainActivity.this, Zvuk.class);
         startActivity(ht3);
 
 
-
     }
+
+
+
+
+    public void zacniOpakovat(View v) {
+
+        Opakovani.run();
+    }
+
+    public void stopOpakovat(View v) {
+        mHandler.removeCallbacks(Opakovani);
+    }
+
+    private Runnable Opakovani = new Runnable() {
+        @Override
+        public void run() {
+            player = MediaPlayer.create(MainActivity.this, R.raw.metronom);
+            pockat = 60/Integer.parseInt(rychlost.getText().toString())*1000  ;
+            player.start();
+            mHandler.postDelayed(this, pockat);
+
+        }
+
+    };
+
+
 
 
 
