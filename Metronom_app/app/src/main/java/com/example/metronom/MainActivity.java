@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
     TextView textView8;
     TextView textView4;
     TextView textView5;
-
+    int i=0;
     Switch aSwitch;
     Switch aSwitch2;
-   // EditText editTextName;
+    EditText editTextName, editTextNumber4, editTextNumber3, editTextTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +47,34 @@ public class MainActivity extends AppCompatActivity {
         textView8 = findViewById(R.id.textView8);
         textView5 = findViewById(R.id.textView5);
         textView4 = findViewById(R.id.textView4);
-        //editTextName=findViewById(R.id.editTextNumber4);
+        editTextName=findViewById(R.id.editTextNumber4);
+        editTextNumber4=findViewById(R.id.editTextNumber2);
+        editTextNumber3=findViewById(R.id.editTextNumber3);
+        editTextTime=findViewById(R.id.editTextTime);
+
         aSwitch = findViewById(R.id.switch2);
         aSwitch2 = findViewById(R.id.switch4);
+        editTextName.setVisibility(View.INVISIBLE);
+        editTextNumber3.setVisibility(View.INVISIBLE);
+        editTextNumber4.setVisibility(View.INVISIBLE);
+        editTextTime.setVisibility(View.INVISIBLE);
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(aSwitch.isChecked())
                 {
-                   textView7.setText("O kolik zrychlit:");
-                   textView8.setText("Jak dlouho hrát:");
+                    textView7.setText("O kolik zrychlit:");
+                    textView8.setText("Jak dlouho hrát:");
+                    editTextName.setVisibility(View.VISIBLE);
+                    editTextTime.setVisibility(View.VISIBLE);
                 }
                 else {
                     textView7.setText("");
                     textView8.setText("");
+                    editTextName.setVisibility(View.INVISIBLE);
+                    editTextTime.setVisibility(View.INVISIBLE);
+
                 }
             }
         });
@@ -74,10 +87,15 @@ public class MainActivity extends AppCompatActivity {
                 {
                     textView4.setText("Kolik zahrát:");
                     textView5.setText("Kolik vynechat:");
+                    editTextNumber3.setVisibility(View.VISIBLE);
+                    editTextNumber4.setVisibility(View.VISIBLE);
+
                 }
                 else {
                     textView4.setText("");
                     textView5.setText("");
+                    editTextNumber3.setVisibility(View.INVISIBLE);
+                    editTextNumber4.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -128,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void zacniOpakovat(View v) {
+        player = MediaPlayer.create(MainActivity.this, R.raw.metronom);
+        float inter = (float) (60.0/Integer.parseInt(rychlost.getText().toString()));
+        pockat = Math.round(inter*1000);
+        System.out.println("Cekam "+pockat);
+        i = 1;
 
         Opakovani.run();
     }
@@ -139,14 +162,17 @@ public class MainActivity extends AppCompatActivity {
     private Runnable Opakovani = new Runnable() {
         @Override
         public void run() {
-            player = MediaPlayer.create(MainActivity.this, R.raw.metronom);
-            pockat = 60/Integer.parseInt(rychlost.getText().toString())*1000  ;
+
             player.start();
+
+            System.out.println("TIKTAK: "+i);
+            i++;
             mHandler.postDelayed(this, pockat);
 
         }
 
     };
+
 
 
 
