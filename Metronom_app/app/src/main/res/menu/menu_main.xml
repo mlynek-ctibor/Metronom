@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:title="Ulož"
-        android:id="@+id/uloz_menu"
+        android:id="@+id/btnAdd"
         app:showAsAction="always"
         />
     <item
         android:title="Načti"
-        android:id="@+id/nacti_menu"
+        android:id="@+id/btnView"
         app:showAsAction="never"
         />
     <item

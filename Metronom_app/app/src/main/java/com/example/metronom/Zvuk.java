@@ -35,12 +35,12 @@ public class Zvuk extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.uloz_menu:
+            case R.id.btnAdd:
                 Intent ht1 = new Intent(Zvuk.this, MainActivity.class);
                 startActivity(ht1);
                 return true;
 
-            case R.id.nacti_menu:
+            case R.id.btnView:
                 Intent ht2 = new Intent(Zvuk.this, Nacti.class);
                 startActivity(ht2);
                 return true;

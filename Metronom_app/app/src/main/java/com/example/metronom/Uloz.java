@@ -37,7 +37,7 @@ public class Uloz extends AppCompatActivity {
 
 
 
-            case R.id.nacti_menu:
+            case R.id.btnView:
                 Intent ht2 = new Intent(Uloz.this, Nacti.class);
                 startActivity(ht2);
                 return true;

@@ -19,6 +19,7 @@
         <activity android:name=".Nacti"/>
         <activity android:name=".Uloz"/>
         <activity android:name=".Zvuk"/>
+        <activity android:name=".UpdateActivity"/>
     </application>
 
 </manifest>
