@@ -25,8 +25,14 @@ import android.media.MediaPlayer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.content.Intent;
-import android.util.Log;
+import java.util.HashMap;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Bundle;
 
 import android.os.Bundle;
 import android.view.View;
@@ -39,19 +45,17 @@ import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity {
-    private double bpm;
-    private int beat;
-    private int noteValue;
-    private int silence;
 
-    private double beatSound;
-    private double sound;
-    private final int tick = 1000; // samples of tick
+    private static SoundPool soundPool;
+    private static HashMap<String, Integer> soundPoolMap;
+    static int mod = 0;
 
-    private boolean play = true;
 
-    private AudioGenerator audioGenerator = new AudioGenerator(8000);
 
+
+
+    private Handler mHandler = new Handler();
+    int pockat;
 
     EditText editText;
     MediaPlayer player;
@@ -59,22 +63,41 @@ public class MainActivity extends AppCompatActivity {
     TextView textView8;
     TextView textView4;
     TextView textView5;
-
+    int i=0;
     Switch aSwitch;
     Switch aSwitch2;
     EditText editTextNumber4, editTextNumber3, editTextNumber6, editTextNumber2;
     Button add_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        audioGenerator.createPlayer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.editTextNumber);
 
+        soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
+        soundPoolMap = new HashMap<String, Integer>();
+
+
+
+
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
+        editText.setText(str);
+
+        Intent intent2 = getIntent();
+        String str2 = intent2.getStringExtra("message_key2");
+        editTextNumber3.setText(str2);
+
+
+
+
+
+
+
         textView7 = findViewById(R.id.textView7);
-       textView8 = findViewById(R.id.textView8);
+        textView8 = findViewById(R.id.textView8);
         textView5 = findViewById(R.id.textView5);
-       textView4 = findViewById(R.id.textView4);
+        textView4 = findViewById(R.id.textView4);
 
         editTextNumber4=findViewById(R.id.editTextNumber2);
         editTextNumber3=findViewById(R.id.editTextNumber3);
@@ -82,19 +105,6 @@ public class MainActivity extends AppCompatActivity {
         editTextNumber2=findViewById(R.id.editTextNumber2);
         /*editTextTime=findViewById(R.id.editTextTime);*/
 
-
-
-        add_button= findViewById(R.id.add_button);
-        add_button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
-                myDB.addBook(editText.getText().toString().trim(),
-                        editTextNumber3.getText().toString().trim(),
-                       Integer.valueOf(editTextNumber4.getText().toString().trim()));
-            }
-        });
 
 
 
@@ -168,6 +178,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnAdd:
                 Intent ht1 = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(ht1);
+                MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+                myDB.addBook(editText.getText().toString().trim(),
+                        editTextNumber3.getText().toString().trim(),
+                        Integer.valueOf(editTextNumber4.getText().toString().trim()));
                 return true;
 
 
@@ -194,61 +208,135 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void calcSilence() {
-        silence = (int) (((60/Integer.parseInt(editText.getText().toString()))*8000)-tick);
-    }
+/**  TOTO JE STARÝ KÓD KLEPÁNÍ ... zde ty vlákna fungovaly jen to klepání nefungovalo
 
-    public void play(View v) {
-        calcSilence();
-        double[] tick =
-                audioGenerator.getSineWave(this.tick, 8000, beatSound);
-        double[] tock =
-                audioGenerator.getSineWave(this.tick, 8000, sound);
-        double silence = 0;
-        double[] sound = new double[8000];
-        int t = 0,s = 0,b = 0;
-        do {
-            for(int i=0;i<sound.length&&play;i++) {
-                if(t<this.tick) {
-                    if(b == 0)
-                        sound[i] = tock[t];
-                    else
-                        sound[i] = tick[t];
-                    t++;
-                } else {
-                    sound[i] = silence;
-                    s++;
-                    if(s >= this.silence) {
-                        t = 0;
-                        s = 0;
-                        b++;
-                        if(b > (this.beat-1))
-                            b = 0;
+ public void zacniOpakovat(View v) {
+ player = MediaPlayer.create(MainActivity.this, R.raw.metronom);
+ float inter = (float) (60.0/Integer.parseInt(editText.getText().toString()));
+ pockat = Math.round(inter*1000);
+ System.out.println("Cekam "+pockat);
+ i = 1;
+
+ Opakovani.run();
+ }
+
+ public void stopOpakovat(View v) {
+ mHandler.removeCallbacks(Opakovani);
+ }
+
+ private Runnable Opakovani = new Runnable() {
+@Override
+public void run() {
+
+player.start();
+
+System.out.println("TIKTAK: "+i);
+i++;
+mHandler.postDelayed(this, pockat);
+
+}
+
+
+
+
+
+
+
+
+};
+
+ */
+
+
+    /** TADY SMĚREM DOLŮ JE NOVÝ KOD KLEPÁNÍ KTERÝ FUNGUJE ALE NENÍ V TOM VLÁKNĚ */
+
+
+
+
+        private class RunnableImpl implements Runnable {
+
+            public void run()
+            {
+                try
+                {
+                    SetBPM(Integer.parseInt(editText.getText().toString()));
+
+                    while(true)
+                    {
+                        if (MetronomeWillPlay() == true)
+                        {
+                            playSound("pop.wav");
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+
+                }
             }
-            audioGenerator.writeSound(sound);
-        } while(play);
+        }
+
+
+
+    public void StartMetronome(View v)
+    {
+        Thread t1 = new Thread(new RunnableImpl());
+        t1.start();
+    }
+    public void StopOpakovat(View v) {
+        SetBPM(0);
     }
 
-    public void stop(View v) {
-        play = false;
-        audioGenerator.destroyAudioTrack();
+
+    public void SetBPM(int bpm)
+    {
+        if (bpm == 0)
+        {
+            mod = 1000;
+        }
+        else
+        {
+            mod = 60000 / bpm;
+        }
     }
 
+    public boolean MetronomeWillPlay()
+    {
+        if ((System.currentTimeMillis() % mod) == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
+    public void playSound(final String filePath)
+    {
+        try
+        {
+            if (!soundPoolMap.containsKey(filePath))
+            {
+                AssetFileDescriptor afd = getAssets().openFd(filePath);
+                if (afd == null)
+                {
+                    System.out.println("Could not find sound " + filePath);
+                    return;
+                }
 
-
-
-
-
-
-
-
-
-
-
-
+                int id = soundPool.load(afd, 1);
+                soundPoolMap.put(filePath, id);
+            }
+            int id = soundPoolMap.get(filePath);
+            soundPool.play(id, 1.0f, 1.0f, 1, 0, 1.0f);
+            System.out.println("Sound Id: " + id);
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage() + ex.toString());
+        }
+    }
 
 
 

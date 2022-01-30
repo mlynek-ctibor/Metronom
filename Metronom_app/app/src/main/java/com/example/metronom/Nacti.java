@@ -82,10 +82,7 @@ public class Nacti extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.btnAdd:
-                Intent ht1 = new Intent(Nacti.this, MainActivity.class);
-                startActivity(ht1);
-                return true;
+
 
 
             case R.id.napoveda_menu:

@@ -7,14 +7,12 @@
         app:showAsAction="always"
         />
     <item
-        android:title="Načti"
         android:id="@+id/btnView"
-        app:showAsAction="never"
-        />
+        android:title="Banka metronomů"
+        app:showAsAction="never" />
     <item
-        android:title="Nápověda"
         android:id="@+id/napoveda_menu"
-        app:showAsAction="never"
-        />
+        android:title="Popis aplikace"
+        app:showAsAction="never" />
 
 </menu>

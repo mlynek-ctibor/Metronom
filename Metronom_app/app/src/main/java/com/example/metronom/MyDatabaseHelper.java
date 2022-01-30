@@ -52,9 +52,9 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PAGES, pages);
         long result = db.insert(TABLE_NAME,null, cv);
         if(result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Nastavení se neuložilo!", Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Nastavení uloženo!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -73,9 +73,9 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_NAME, "_id=?", new String[]{row_id});
         if(result == -1){
-            Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Smazání selhalo!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Data jsou smazány!", Toast.LENGTH_SHORT).show();
         }
     }
 }

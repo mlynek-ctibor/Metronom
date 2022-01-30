@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class UpdateActivity extends AppCompatActivity {
     private Context context;
-    EditText title_input, author_input, pages_input;
+    EditText title_input, author_input, pages_input, editText;
     Button update_button, delete_button;
 
     String id, title, author, pages;
@@ -29,7 +29,7 @@ public class UpdateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-
+        editText = findViewById(R.id.editTextNumber);
         title_input = findViewById(R.id.title_input2);
         author_input = findViewById(R.id.author_input2);
         pages_input = findViewById(R.id.pages_input2);
@@ -41,8 +41,15 @@ public class UpdateActivity extends AppCompatActivity {
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
+                String str = title_input.getText().toString();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("message_key", str);
+                startActivity(intent);
+
+                String str2 = author_input.getText().toString();
+                Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("message_key2", str2);
+                startActivity(intent2);
             }
         });
 
@@ -57,6 +64,9 @@ public class UpdateActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     void getAndSetIntentData(){
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title") &&
@@ -73,15 +83,15 @@ public class UpdateActivity extends AppCompatActivity {
             pages_input.setText(pages);
 
         }else{
-            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Žádné data.", Toast.LENGTH_SHORT).show();
         }
     }
 
     void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete " + title + " ?");
-        builder.setMessage("Are you sure you want to delete " + title + " ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setTitle("Smazat nastavení " + title + " ?");
+        builder.setMessage("Jste si jisti, že chcete smazat nastavení " + title + " ?");
+        builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
@@ -89,7 +99,7 @@ public class UpdateActivity extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -107,10 +117,6 @@ public class UpdateActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.btnAdd:
-                Intent ht1 = new Intent(UpdateActivity.this, MainActivity.class);
-                startActivity(ht1);
-                return true;
 
 
             case R.id.napoveda_menu:
