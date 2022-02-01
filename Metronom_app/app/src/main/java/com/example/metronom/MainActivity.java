@@ -82,11 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String str = intent.getStringExtra("message_key");
+
         editText.setText(str);
 
-        Intent intent2 = getIntent();
-        String str2 = intent2.getStringExtra("message_key2");
-        editTextNumber3.setText(str2);
+
 
 
 
@@ -149,6 +148,16 @@ public class MainActivity extends AppCompatActivity {
                     textView5.setText("Kolik vynechat:");
                     editTextNumber2.setVisibility(View.VISIBLE);
                     editTextNumber3.setVisibility(View.VISIBLE);
+
+
+
+                    Intent intent = getIntent();
+                    String str2 = intent.getStringExtra("message_key2");
+                    String str3 = intent.getStringExtra("message_key3");
+                    editTextNumber3.setText(str2);
+                    editTextNumber2.setText(str3);
+
+
 
                 }
                 else {
@@ -253,28 +262,28 @@ mHandler.postDelayed(this, pockat);
 
 
 
-        private class RunnableImpl implements Runnable {
+    private class RunnableImpl implements Runnable {
 
-            public void run()
+        public void run()
+        {
+            try
             {
-                try
-                {
-                    SetBPM(Integer.parseInt(editText.getText().toString()));
+                SetBPM(Integer.parseInt(editText.getText().toString()));
 
-                    while(true)
+                while(true)
+                {
+                    if (MetronomeWillPlay() == true)
                     {
-                        if (MetronomeWillPlay() == true)
-                        {
-                            playSound("pop.wav");
-                        }
+                        playSound("pop.wav");
                     }
                 }
-                catch (Exception ex)
-                {
+            }
+            catch (Exception ex)
+            {
 
-                }
             }
         }
+    }
 
 
 
@@ -284,7 +293,8 @@ mHandler.postDelayed(this, pockat);
         t1.start();
     }
     public void StopOpakovat(View v) {
-        SetBPM(0);
+        Thread t1 = new Thread(new RunnableImpl());
+        t1.stop();
     }
 
 
