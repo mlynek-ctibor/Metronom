@@ -3,39 +3,25 @@ package com.example.metronom;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import android.database.Cursor;
-import android.os.Bundle;
 
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Nacti extends AppCompatActivity {
    RecyclerView recyclerView;
-    MyDatabaseHelper myDB;
-    ArrayList<String> book_id, book_title, book_author, book_pages;
-    CustomAdapter customAdapter;
+    NastaveniDatabaze myDB;
+    ArrayList<String> banka_id, tempo, kolik_vynechat, kolik_zahrat;
+    UrciteNastaveni urciteNastaveni;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,31 +29,31 @@ public class Nacti extends AppCompatActivity {
         setContentView(R.layout.nacti);
         recyclerView = findViewById(R.id.recyclerView);
 
-        myDB = new MyDatabaseHelper(Nacti.this);
-        book_id = new ArrayList<>();
-        book_title = new ArrayList<>();
-        book_author = new ArrayList<>();
-        book_pages = new ArrayList<>();
+        myDB = new NastaveniDatabaze(Nacti.this);
+        banka_id = new ArrayList<>();
+        tempo = new ArrayList<>();
+        kolik_vynechat = new ArrayList<>();
+        kolik_zahrat = new ArrayList<>();
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(Nacti.this,this, book_id, book_title, book_author,
-                book_pages);
-        recyclerView.setAdapter(customAdapter);
+        urciteNastaveni = new UrciteNastaveni(Nacti.this,this, banka_id, tempo, kolik_vynechat,
+                kolik_zahrat);
+        recyclerView.setAdapter(urciteNastaveni);
         recyclerView.setLayoutManager(new LinearLayoutManager(Nacti.this));
     }
 
 
     void storeDataInArrays(){
-        Cursor cursor = myDB.readAllData();
+        Cursor cursor = myDB.zobrazVsechnaData();
         if(cursor.getCount() == 0){
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT). show() ;
+            Toast.makeText(this, "Žádné nastavení", Toast.LENGTH_SHORT). show() ;
         }else{
             while (cursor.moveToNext()){
-                book_id.add(cursor.getString(0));
-                book_title.add(cursor.getString(1));
-                book_author.add(cursor.getString(2));
-                book_pages.add(cursor.getString(3));
+                banka_id.add(cursor.getString(0));
+                tempo.add(cursor.getString(1));
+                kolik_vynechat.add(cursor.getString(2));
+                kolik_zahrat.add(cursor.getString(3));
             }
 
         }

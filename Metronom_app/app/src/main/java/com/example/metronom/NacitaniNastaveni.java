@@ -1,7 +1,6 @@
 package com.example.metronom;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,49 +16,52 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class UpdateActivity extends AppCompatActivity {
+public class NacitaniNastaveni extends AppCompatActivity {
     private Context context;
-    EditText title_input, author_input, pages_input, editText;
-    Button update_button, delete_button;
+    EditText tempo, kolik_vynechat2, kolik_zahrat2, editText;
+    Button nacist_btn, smazat_btn;
 
-    String id, title, author, pages;
+    String id, tempo_txt, kolik_vynechat, kolik_zahrat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
         editText = findViewById(R.id.editTextNumber);
-        title_input = findViewById(R.id.title_input2);
-        author_input = findViewById(R.id.author_input2);
-        pages_input = findViewById(R.id.pages_input2);
-        update_button = findViewById(R.id.update_button);
-        delete_button = findViewById(R.id.delete_button);
+        tempo = findViewById(R.id.tempo);
+        kolik_vynechat2 = findViewById(R.id.kolik_vynechat2);
+        kolik_zahrat2 = findViewById(R.id.kolik_zahrat2);
+        nacist_btn = findViewById(R.id.nacist_btn);
+        smazat_btn = findViewById(R.id.smazat_btn);
 
 
 
-        update_button.setOnClickListener(new View.OnClickListener() {
+        nacist_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = title_input.getText().toString();
+                String str = tempo.getText().toString();
+                String str2 = kolik_vynechat2.getText().toString();
+                String str3 = kolik_zahrat2.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("message_key", str);
+                intent.putExtra("message_key2", str2);
+                intent.putExtra("message_key3", str3);
                 startActivity(intent);
 
-                String str2 = author_input.getText().toString();
-                Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("message_key2", str2);
-                startActivity(intent2);
+
+
+
             }
         });
 
-        delete_button.setOnClickListener(new View.OnClickListener() {
+        smazat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmDialog();
+                potvrzovaciDialog();
             }
         });
 
-        getAndSetIntentData();
+        nacteniAZobrazeniDat();
 
 
     }
@@ -68,34 +69,34 @@ public class UpdateActivity extends AppCompatActivity {
 
 
 
-    void getAndSetIntentData(){
-        if(getIntent().hasExtra("id") && getIntent().hasExtra("title") &&
-                getIntent().hasExtra("author") && getIntent().hasExtra("pages")){
-            //Getting Data from Intent
-            id = getIntent().getStringExtra("id");
-            title = getIntent().getStringExtra("title");
-            author = getIntent().getStringExtra("author");
-            pages = getIntent().getStringExtra("pages");
+    void nacteniAZobrazeniDat(){
+        if(getIntent().hasExtra("id") && getIntent().hasExtra("tempo") &&
+                getIntent().hasExtra("kolik_vynechat") && getIntent().hasExtra("kolik_zahrat")){
 
-            //Setting Intent Data
-            title_input.setText(title);
-            author_input.setText(author);
-            pages_input.setText(pages);
+            id = getIntent().getStringExtra("id");
+            tempo_txt = getIntent().getStringExtra("tempo");
+            kolik_zahrat = getIntent().getStringExtra("kolik_vynechat");
+            kolik_vynechat = getIntent().getStringExtra("kolik_zahrat");
+
+
+            tempo.setText(tempo_txt);
+            kolik_vynechat2.setText(kolik_zahrat);
+            kolik_zahrat2.setText(kolik_vynechat);
 
         }else{
             Toast.makeText(this, "Žádné data.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    void confirmDialog(){
+    void potvrzovaciDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Smazat nastavení " + title + " ?");
-        builder.setMessage("Jste si jisti, že chcete smazat nastavení " + title + " ?");
+        builder.setTitle("Smazat nastavení " + id + " ?");
+        builder.setMessage("Jste si jisti, že chcete smazat nastavení " + id + " ?");
         builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
-                myDB.deleteOneRow(id);
+                NastaveniDatabaze myDB = new NastaveniDatabaze(NacitaniNastaveni.this);
+                myDB.smazaniJednohoNastaveni(id);
                 finish();
             }
         });

@@ -9,30 +9,30 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
-class MyDatabaseHelper extends SQLiteOpenHelper {
+class NastaveniDatabaze extends SQLiteOpenHelper {
 
     private Context context;
-    private static final String DATABASE_NAME = "BookLibrary.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String JMENO_DATABASE = "BankaMetronomu.db";
+    private static final int VERSE_DATABASE = 1;
 
-    private static final String TABLE_NAME = "my_library";
-    private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_TITLE = "book_title";
-    private static final String COLUMN_AUTHOR = "book_author";
-    private static final String COLUMN_PAGES = "book_pages";
+    private static final String TABLE_NAME = "moje_banka";
+    private static final String SLOUPEC_ID = "_id";
+    private static final String SLOUPEC_TEMPO = "tempo";
+    private static final String SLOUPEC_VYNECHAT = "kolik_vynechat";
+    private static final String SLOUPEC_ZAHRAT = "kolik_zahrat";
 
-    MyDatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    NastaveniDatabaze(@Nullable Context context) {
+        super(context, JMENO_DATABASE, null, VERSE_DATABASE);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
-                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_TITLE + " TEXT, " +
-                COLUMN_AUTHOR + " TEXT, " +
-                COLUMN_PAGES + " INTEGER);";
+                " (" + SLOUPEC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                SLOUPEC_TEMPO + " TEXT, " +
+                SLOUPEC_VYNECHAT + " TEXT, " +
+                SLOUPEC_ZAHRAT + " INTEGER);";
         db.execSQL(query);
     }
 
@@ -43,13 +43,13 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    void addBook(String title, String author, int pages){
+    void pridaniNastaveni(String tempo, String vynechat, int zahrat){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_TITLE, title);
-        cv.put(COLUMN_AUTHOR, author);
-        cv.put(COLUMN_PAGES, pages);
+        cv.put(SLOUPEC_TEMPO, tempo);
+        cv.put(SLOUPEC_VYNECHAT, vynechat);
+        cv.put(SLOUPEC_ZAHRAT, zahrat);
         long result = db.insert(TABLE_NAME,null, cv);
         if(result == -1){
             Toast.makeText(context, "Nastavení se neuložilo!", Toast.LENGTH_SHORT).show();
@@ -58,7 +58,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    Cursor readAllData(){
+    Cursor zobrazVsechnaData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -69,7 +69,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    void deleteOneRow(String row_id){
+    void smazaniJednohoNastaveni(String row_id){
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_NAME, "_id=?", new String[]{row_id});
         if(result == -1){

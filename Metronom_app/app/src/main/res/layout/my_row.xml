@@ -18,7 +18,7 @@
             android:padding="12dp">
 
             <TextView
-                android:id="@+id/book_id_txt"
+                android:id="@+id/banka_id_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/book_title_txt"
+                android:id="@+id/tempo_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="108dp"
@@ -39,27 +39,27 @@
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/book_id_txt"
-                app:layout_constraintTop_toTopOf="@+id/book_id_txt" />
+                app:layout_constraintStart_toEndOf="@+id/banka_id_text"
+                app:layout_constraintTop_toTopOf="@+id/banka_id_text" />
 
             <TextView
-                android:id="@+id/book_pages_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="120"
+                android:id="@+id/kolik_zahrat_text"
+                android:layout_width="30dp"
+                android:layout_height="21dp"
+                android:text="1"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.929"
+                app:layout_constraintHorizontal_bias="0.958"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.037" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/book_author_txt"
+                android:id="@+id/kolik_vynechat_text"
                 android:layout_width="30dp"
                 android:layout_height="21dp"
-                android:text="Author1"
+                android:text="1"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -77,10 +77,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.153"
+                app:layout_constraintHorizontal_bias="0.156"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.142" />
+                app:layout_constraintVertical_bias="0.444" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -89,10 +89,10 @@
                 android:text="Kolik zahrát:"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.742"
+                app:layout_constraintHorizontal_bias="0.793"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.203" />
+                app:layout_constraintVertical_bias="0.26" />
 
             <TextView
                 android:id="@+id/textView11"

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Metronom</string>
+
+    <string-array name="zvuky">
+        <item>metronom.wav</item>
+        <item>pop2.wav</item>
+
+    </string-array>
+
+
 </resources>
