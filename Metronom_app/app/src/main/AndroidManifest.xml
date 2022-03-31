@@ -17,8 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Nacti"/>
-        <activity android:name=".Uloz"/>
-        <activity android:name=".Zvuk"/>
         <activity android:name=".NacitaniNastaveni"/>
     </application>
 

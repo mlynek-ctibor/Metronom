@@ -5,35 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="15dp">
+    tools:layout_editor_absoluteY="10dp">
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zvuk:"
+        android:text="Zvýraznění:"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.278" />
+        app:layout_constraintVertical_bias="0.461" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/textView26"
+        android:layout_width="379dp"
+        android:layout_height="64dp"
+        android:text="Funkci použijeme pokud chceme zvýraznit každo první dobu z daného počtu. Tímto zajistíme, že nevynecháme žádnou notu . V nastavení můžeme vybírat mezi 3, 4 nebo funkci vypnout."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.542" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="379dp"
+        android:layout_height="64dp"
+        android:text="Pomocí nastavení si můžeme nastavit kolik dob chceme vynechat a kolik zahraje. Funkce je omezená danou rychlostí, daným zvukem a funkce Zvýraznění musí být nastavena bez žádného zvýraznění."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361" />
+
+    <TextView
+        android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Spouštění klepání:"
+        android:text="Vynechání dob:"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.294" />
 
     <TextView
         android:id="@+id/textView3"
@@ -44,10 +68,36 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.035"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.129" />
+        app:layout_constraintVertical_bias="0.052" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="379dp"
+        android:layout_height="64dp"
+        android:text="Pokud se nám nelíbí zvuk klepání, můžeme si vybrat zvuk z nabídky, který nám vyhovuje. "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.232" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zvuk:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.167" />
 
     <TextView
         android:id="@+id/textView14"
@@ -56,9 +106,36 @@
         android:text="Základní funkcí metronomu je pouhé rovnoměrné odklepávání rytmu."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.109" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="380dp"
+        android:layout_height="114dp"
+        android:text='Celé toto nastavení si můžeme uložit pomocí tlačítka "Ulož". Pokud tedy budeme chtít pokračovat příště s nastavením z minula, jednoduše ho načteme v Bance metronomů a můžeme pokračovat v cvičení. Vše bude uloženo v aplikaci a my se nemusíme strachovat, že zapomeneme např. u jakého tempa jsme skončili. '
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.387"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.795" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spouštění klepání:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.859" />
 
     <TextView
         android:id="@+id/textView19"
@@ -70,7 +147,7 @@
         app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintVertical_bias="0.98" />
 
     <TextView
         android:id="@+id/textView20"
@@ -81,32 +158,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.599" />
+        app:layout_constraintVertical_bias="0.62" />
 
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="380dp"
-        android:layout_height="114dp"
-        android:text='Celé toto nastavení si můžeme uložit pomocí tlačítka "Ulož". Pokud tedy budeme chtít pokračovat příště s nastavením z minula, jednoduše ho načteme v Bance metronomů a můžeme pokračovat v cvičení. Vše bude uloženo v aplikaci a my se nemusíme strachovat, že zapomeneme např. u jakého tempa jsme skončili. '
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.354"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.753" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="379dp"
-        android:layout_height="64dp"
-        android:text="Pokud se nám nelíbí zvuk klepání, můžeme si vybrat zvuk z nabídky, který nám vyhovuje. "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.437"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.361" />
 </androidx.constraintlayout.widget.ConstraintLayout>

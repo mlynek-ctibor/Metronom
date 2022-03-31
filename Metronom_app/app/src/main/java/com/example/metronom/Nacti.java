@@ -35,7 +35,7 @@ public class Nacti extends AppCompatActivity {
         kolik_vynechat = new ArrayList<>();
         kolik_zahrat = new ArrayList<>();
 
-        storeDataInArrays();
+        vsechnyData();
 
         urciteNastaveni = new UrciteNastaveni(Nacti.this,this, banka_id, tempo, kolik_vynechat,
                 kolik_zahrat);
@@ -44,7 +44,7 @@ public class Nacti extends AppCompatActivity {
     }
 
 
-    void storeDataInArrays(){
+    void vsechnyData(){
         Cursor cursor = myDB.zobrazVsechnaData();
         if(cursor.getCount() == 0){
             Toast.makeText(this, "Žádné nastavení", Toast.LENGTH_SHORT). show() ;

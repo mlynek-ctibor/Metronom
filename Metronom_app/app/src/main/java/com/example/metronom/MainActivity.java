@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.media.MediaPlayer;
 
@@ -32,6 +34,14 @@ import android.media.SoundPool;
 
 public class MainActivity extends AppCompatActivity {
 
+    MediaPlayer mp;
+    String pauzaVynechaniPole, hratVynechaniPole;
+    Long pauzaKlepani, hrat;
+    Boolean hraje = false;
+    ConstraintLayout swagLayout;
+
+
+
     private static SoundPool soundPool;
     private static HashMap<String, Integer> soundPoolMap;
     static int mod = 0;
@@ -44,34 +54,37 @@ public class MainActivity extends AppCompatActivity {
     boolean stop = false;
     String zvuk;
     String zvyrazeni;
+    String nic;
+
 
 
     private Handler mHandler = new Handler();
-    int pockat;
     private int kdyZvednout = 8000000;
     private int kolikratJsemKlepnul=0;
     EditText editText;
-    MediaPlayer player;
-    TextView textView7;
-    TextView textView8;
     TextView textView4;
     TextView textView5;
-    Spinner spinnerZvuky;
-    int i=0;
-    Switch aSwitch;
+
+
+
     Switch aSwitch2;
-    EditText editTextNumber4, editTextNumber3, editTextNumber6, editTextNumber2;
-    Button add_button;
+    EditText editTextNumber4, editTextNumber3, editTextNumber2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.editTextNumber);
+        swagLayout = findViewById(R.id.swag_layout_id);
+
+        mp = MediaPlayer.create(MainActivity.this, R.raw.zvuk1);
 
         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
         soundPoolMap = new HashMap<String, Integer>();
 
+        Integer i = 123;
 
+        i.toString();
 
 
         Intent intent = getIntent();
@@ -84,13 +97,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       List<String> states = Arrays.asList("metronom.wav","pop2.wav");
+       List<String> states = Arrays.asList("zvuk1.wav","zvuk2.wav");
        spinner = findViewById(R.id.spinnerZvuky);
        adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, states);
        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
        spinner.setAdapter(adapter);
 
-        List<String> states2 = Arrays.asList("8000","4","3");
+        List<String> states2 = Arrays.asList("8000", "4","3");
         spinner2 = findViewById(R.id.spinnerZvyrazneni);
         adapter2 = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, states2);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -103,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         editTextNumber3=findViewById(R.id.editTextNumber3);
 
         editTextNumber2=findViewById(R.id.editTextNumber2);
-        /*editTextTime=findViewById(R.id.editTextTime);*/
+
 
 
 
@@ -138,8 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     String str3 = intent.getStringExtra("message_key3");
                     editTextNumber3.setText(str2);
                     editTextNumber2.setText(str3);
-
-
+                    swagLayout.setVisibility(View.VISIBLE);
 
 
 
@@ -149,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     textView5.setText("");
                     editTextNumber2.setVisibility(View.INVISIBLE);
                     editTextNumber3.setVisibility(View.INVISIBLE);
+                    swagLayout.setVisibility(View.GONE);
                 }
             }
         });
@@ -197,55 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Zvuk(View view) {
-        Intent ht3 = new Intent(MainActivity.this, Zvuk.class);
-        startActivity(ht3);
 
-
-    }
-
-
-/**  TOTO JE STARÝ KÓD KLEPÁNÍ ... zde ty vlákna fungovaly jen to klepání nefungovalo
-
- public void zacniOpakovat(View v) {
- player = MediaPlayer.create(MainActivity.this, R.raw.metronom);
- float inter = (float) (60.0/Integer.parseInt(editText.getText().toString()));
- pockat = Math.round(inter*1000);
- System.out.println("Cekam "+pockat);
- i = 1;
-
- Opakovani.run();
- }
-
- public void stopOpakovat(View v) {
- mHandler.removeCallbacks(Opakovani);
- }
-
- private Runnable Opakovani = new Runnable() {
-@Override
-public void run() {
-
-player.start();
-
-System.out.println("TIKTAK: "+i);
-i++;
-mHandler.postDelayed(this, pockat);
-
-}
-
-
-
-
-
-
-
-
-};
-
- */
-
-
-    /** TADY SMĚREM DOLŮ JE NOVÝ KOD KLEPÁNÍ KTERÝ FUNGUJE ALE NENÍ V TOM VLÁKNĚ */
 
 
 
@@ -261,7 +226,7 @@ mHandler.postDelayed(this, pockat);
 
                 while(!stop)
                 {
-                    if (metronomKdyzHraje() == true)
+                    if (metronomKdyzHraje())
                     {
                         prehravaniZvuku(zvuk);
                     }
@@ -278,14 +243,40 @@ mHandler.postDelayed(this, pockat);
 
     public void startOpakovat(View v)
     {
+        pauzaVynechaniPole = editTextNumber3.getText().toString();
+        hratVynechaniPole = editTextNumber2.getText().toString();
+
+
+        if (swagLayout.getVisibility()==View.VISIBLE) {
+
+            if (!pauzaVynechaniPole.isEmpty() && !hratVynechaniPole.isEmpty()){
+                pauzaKlepani = Long.parseLong(pauzaVynechaniPole +"000");
+                hrat = Long.parseLong(hratVynechaniPole +"000");
+
+
+                if (!hraje){
+                    hraje = true;
+                    mp = MediaPlayer.create(MainActivity.this, R.raw.zvuk1);
+
+                    vynechaniDob();
+                }
+            }
+        }else {
             t1 = new Thread(new RunnableImpl());
             t1.start();
             zvuk = spinner.getSelectedItem().toString();
-        zvyrazeni = spinner2.getSelectedItem().toString();
+            zvyrazeni = spinner2.getSelectedItem().toString();
+        }
     }
     public void stopOpakovat(View v) {
 
         stop=true;
+        if (hraje) {
+            hraje = false;
+            mp.setLooping(false);
+            mp.stop();
+        }
+
     }
 
 
@@ -349,6 +340,46 @@ mHandler.postDelayed(this, pockat);
         }
     }
 
+    public void vynechaniDob()
+    {
+        if (hraje)
+        {
+
+            new Handler().postDelayed(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if (hraje)
+                    {
+                        mp.setLooping(true);
+                        mp.start();
+
+
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+
+                                mp.setLooping(false);
+                                mp.stop();
+
+                                vynechaniDob();
+
+
+                            }
+                        }, hrat);
+                    }
+
+
+                }
+            }, pauzaKlepani);
+        }
+
+
+
+    }
 
 
 

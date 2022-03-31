@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Metronom</string>
+    <string name="app_name">E-Metronom</string>
 
     <string-array name="zvuky">
-        <item>metronom.wav</item>
-        <item>pop2.wav</item>
+        <item>zvuk1.wav</item>
+        <item>zvuk2.wav</item>
 
     </string-array>
 
