@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     boolean stop = false;
     String zvuk;
     String zvyrazeni;
+    int number;
     String nic;
 
 
@@ -99,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
 
        List<String> states = Arrays.asList("zvuk1.wav","zvuk2.wav");
        spinner = findViewById(R.id.spinnerZvuky);
-       adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, states);
-       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       adapter = new ArrayAdapter(getApplicationContext(), R.layout.spinner_text, states);
+       adapter.setDropDownViewResource(R. layout.spinner_text);
        spinner.setAdapter(adapter);
 
-        List<String> states2 = Arrays.asList("8000", "4","3");
+        List<String> states2 = Arrays.asList("Žádné", "4","3");
         spinner2 = findViewById(R.id.spinnerZvyrazneni);
-        adapter2 = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, states2);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2 = new ArrayAdapter(getApplicationContext(), R.layout.spinner_text, states2);
+        adapter2.setDropDownViewResource(R. layout.spinner_text);
         spinner2.setAdapter(adapter2);
 
         textView5 = findViewById(R.id.textView5);
@@ -321,7 +322,13 @@ public class MainActivity extends AppCompatActivity {
                 soundPoolMap.put(filePath, id);
             }
             int id = soundPoolMap.get(filePath);
-            int number = Integer.parseInt(zvyrazeni);
+            if(zvyrazeni == "Žádné"){
+            number = 9999999;
+
+        }
+else{
+        number = Integer.parseInt(zvyrazeni);
+    }
             if(kdyZvednout!=-1) {
                 if (((kolikratJsemKlepnul) % number) == 0) {
                     soundPool.play(id, 1.0f, 1.0f, 1, 0, 2.0f);

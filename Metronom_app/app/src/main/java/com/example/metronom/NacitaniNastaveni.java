@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class NacitaniNastaveni extends AppCompatActivity {
     private Context context;
-    EditText tempo, kolik_vynechat2, kolik_zahrat2, editText;
+    EditText editText;
+    TextView tempo, kolik_vynechat2, kolik_zahrat2 ;
     Button nacist_btn, smazat_btn;
 
     String id, tempo_txt, kolik_vynechat, kolik_zahrat;

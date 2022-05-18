@@ -37,7 +37,7 @@
         android:id="@+id/textView24"
         android:layout_width="379dp"
         android:layout_height="64dp"
-        android:text="Pomocí nastavení si můžeme nastavit kolik dob chceme vynechat a kolik zahraje. Funkce je omezená danou rychlostí, daným zvukem a funkce Zvýraznění musí být nastavena bez žádného zvýraznění."
+        android:text="Pomocí nastavení si můžeme nastavit kolik dob chceme vynechat a kolik zahraje. Funkce je omezená danou rychlostí, daným zvukem a funkce. Funkce musí být nastavena bez žádného zvýraznění."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.375"
